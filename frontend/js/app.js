@@ -1,4 +1,4 @@
-const API = "https://tu-app.onrender.com";
+const API = "https://mlpredictor-ad.onrender.com";
 
 // ── Estado global ────────────────────────────────────────────────────────────
 let featureNames    = [];
