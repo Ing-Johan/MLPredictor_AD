@@ -10,6 +10,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 from sklearn.metrics import (
     accuracy_score, precision_score, recall_score,
     f1_score, confusion_matrix
@@ -40,6 +41,10 @@ with open(os.path.join(MODELS_DIR, "metadata.json")) as f:
 FEATURES   = metadata["feature_names"]
 LABEL_MAP  = metadata["label_map"]
 print("Modelos cargados.")
+
+
+from flask_cors import CORS
+CORS(app)
 
 
 # ── Utilidades ────────────────────────────────────────────────────────────────
