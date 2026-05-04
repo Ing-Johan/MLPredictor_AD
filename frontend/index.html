@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ML Predictor · Cáncer de Mama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ── SIDEBAR NAV ─────────────────────────────────────────────────────── -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">ML<strong>Predictor</strong></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#inicio"     class="nav-link active" data-section="inicio">Inicio</a></li>
+      <li><a href="#individual" class="nav-link"        data-section="individual">Predicción Individual</a></li>
+      <li><a href="#lote"       class="nav-link"        data-section="lote">Predicción por Lote</a></li>
+      <li><a href="#resultados" class="nav-link"        data-section="resultados">Resultados</a></li>
+    </ul>
+    <div class="sidebar-badge">
+      <span class="badge-dot"></span>
+      <span>Modelos listos</span>
+    </div>
+  </nav>
+
+  <!-- ── MAIN CONTENT ────────────────────────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- ══ INICIO ══════════════════════════════════════════════════════════ -->
+    <section id="inicio" class="section active">
+      <div class="section-header">
+        <h1>Diagnóstico predictivo de<br><em>cáncer de mama</em></h1>
+        <p class="subtitle">Herramienta de apoyo basada en aprendizaje automático para clasificar tumores como malignos o benignos a partir de características clínicas.</p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card card--blue">
+          <div class="card-icon">🧬</div>
+          <h3>Dataset</h3>
+          <p><strong>Breast Cancer Wisconsin</strong> — UCI Machine Learning Repository</p>
+          <ul>
+            <li>569 muestras reales</li>
+            <li>30 características numéricas</li>
+            <li>2 clases: Maligno / Benigno</li>
+          </ul>
+        </div>
+
+        <div class="card card--green">
+          <div class="card-icon">🤖</div>
+          <h3>Modelos</h3>
+          <p>Dos algoritmos de clasificación entrenados y listos para usar:</p>
+          <ul>
+            <li>Regresión Logística</li>
+            <li>Red Neuronal (MLP)</li>
+          </ul>
+        </div>
+
+        <div class="card card--purple">
+          <div class="card-icon">🎯</div>
+          <h3>¿Qué predice?</h3>
+          <p>Con base en medidas del núcleo celular (radio, textura, perímetro…) el sistema determina si un tumor es:</p>
+          <ul>
+            <li>🔴 <strong>Maligno</strong> — canceroso</li>
+            <li>🟢 <strong>Benigno</strong> — no canceroso</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-banner">
+        <span class="info-icon">ℹ️</span>
+        <p>Esta herramienta es únicamente de uso académico y educativo. No reemplaza el diagnóstico médico profesional.</p>
+      </div>
+
+      <div class="metrics-preview">
+        <h2>Rendimiento de los Modelos</h2>
+        <div id="metrics-bars" class="metrics-bars">
+          <p class="loading-text">Cargando métricas…</p>
+        </div>
+        <div class="comparison-img-wrap">
+          <img src="static/model_comparison.png" alt="Comparación de modelos" class="comparison-img" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ PREDICCIÓN INDIVIDUAL ════════════════════════════════════════════ -->
+    <section id="individual" class="section">
+      <div class="section-header">
+        <h1>Predicción <em>Individual</em></h1>
+        <p class="subtitle">Ingresa los valores clínicos para obtener una predicción inmediata.</p>
+      </div>
+
+      <!-- Model selector -->
+      <div class="model-selector">
+        <label>Modelo a usar:</label>
+        <div class="toggle-group" id="model-toggle">
+          <button class="toggle-btn active" data-model="logistic_regression">Regresión Logística</button>
+          <button class="toggle-btn"        data-model="neural_network">Red Neuronal</button>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form id="predict-form" class="predict-form" autocomplete="off">
+        <div class="form-groups-wrapper" id="form-fields">
+          <!-- Populated by JS -->
+          <p class="loading-text">Cargando campos…</p>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="btn-randomize">
+            🎲 Aleatorizar valores
+          </button>
+          <br>
+          <br>
+          <button type="submit" class="btn-predict" id="btn-predict">
+            <span class="btn-icon">⚡</span> Predecir
+          </button>
+        </div>
+      </form>
+
+      <!-- Result box -->
+      <div id="result-individual" class="result-box hidden"></div>
+    </section>
+
+    <!-- ══ PREDICCIÓN POR LOTE ══════════════════════════════════════════════ -->
+    <section id="lote" class="section">
+      <div class="section-header">
+        <h1>Predicción por <em>Lote</em></h1>
+        <p class="subtitle">Sube un archivo CSV con múltiples muestras y obtén las predicciones de todas a la vez.</p>
+      </div>
+
+      <div class="model-selector">
+        <label>Modelo a usar:</label>
+        <div class="toggle-group" id="model-toggle-batch">
+          <button class="toggle-btn active" data-model="logistic_regression">Regresión Logística</button>
+          <button class="toggle-btn"        data-model="neural_network">Red Neuronal</button>
+        </div>
+      </div>
+
+      <div class="upload-zone" id="upload-zone">
+        <div class="upload-icon">📂</div>
+        <p class="upload-text">Arrastra tu archivo CSV aquí</p>
+        <p class="upload-hint">o haz clic para seleccionar</p>
+        <input type="file" id="csv-file" accept=".csv" class="file-input" />
+        <p class="upload-format">El CSV debe tener las 30 columnas de features (ver dataset de ejemplo)</p>
+      </div>
+
+      <div class="batch-actions">
+        <button class="btn-secondary" id="btn-download-sample">⬇ Descargar CSV de ejemplo</button>
+        <button class="btn-predict"   id="btn-batch-predict">⚡ Predecir Lote</button>
+      </div>
+
+      <div id="result-batch" class="hidden">
+        <div id="batch-metrics-box" class="batch-metrics hidden"></div>
+        <div id="batch-table-wrap"  class="table-wrap"></div>
+      </div>
+    </section>
+
+    <!-- ══ RESULTADOS / MÉTRICAS ════════════════════════════════════════════ -->
+    <section id="resultados" class="section">
+      <div class="section-header">
+        <h1><em>Resultados</em> del Entrenamiento</h1>
+        <p class="subtitle">Métricas y matrices de confusión obtenidas con el conjunto de prueba (20% del dataset).</p>
+      </div>
+
+      <div id="results-content">
+        <div class="results-grid">
+
+          <!-- Logistic Regression -->
+          <div class="result-card">
+            <h3>Regresión Logística</h3>
+            <div id="lr-metrics" class="metric-chips"></div>
+            <div class="cm-wrap">
+              <img src="static/cm_logistic_regression.png" alt="Matriz de confusión - Regresión Logística" class="cm-img" />
+            </div>
+          </div>
+
+          <!-- Neural Network -->
+          <div class="result-card">
+            <h3>Red Neuronal (MLP)</h3>
+            <div id="nn-metrics" class="metric-chips"></div>
+            <div class="cm-wrap">
+              <img src="static/cm_neural_network.png" alt="Matriz de confusión - Red Neuronal" class="cm-img" />
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Comparison chart -->
+        <div class="comparison-section">
+          <h3>Comparación Global</h3>
+          <img src="static/model_comparison.png" alt="Comparación de modelos" class="comparison-img-lg" />
+        </div>
+
+        <!-- Explanation -->
+        <div class="explainer-box">
+          <h3>Interpretación de Métricas</h3>
+          <div class="explainer-grid">
+            <div><strong>Accuracy</strong><p>Porcentaje total de predicciones correctas.</p></div>
+            <div><strong>Precision</strong><p>De las muestras clasificadas como benignas, ¿cuántas realmente lo son?</p></div>
+            <div><strong>Recall</strong><p>De todas las muestras benignas reales, ¿cuántas detectamos?</p></div>
+            <div><strong>F1-Score</strong><p>Media armónica entre Precision y Recall. Ideal cuando las clases están desbalanceadas.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /main-content -->
+
+  <script src="js/app.js"></script>
+</body>
+</html>
