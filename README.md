@@ -40,7 +40,7 @@ ml-predictor/
 pip install -r requirements.txt
 ```
 
-### 3. Entrenar los modelos (solo la primera vez)
+### 3. Entrenar los modelos
 ```bash
 python backend/train_models.py
 ```
@@ -109,43 +109,3 @@ Abre tu navegador y ve a: **http://localhost:5000**
 - Accuracy típica: ~95%
 
 ---
-
-## 🌐 API Endpoints
-
-| Método | Ruta | Descripción |
-|---|---|---|
-| GET | `/api/info` | Información del dataset y modelos |
-| GET | `/api/metrics` | Métricas de entrenamiento |
-| POST | `/api/predict` | Predicción individual (JSON) |
-| POST | `/api/predict-batch` | Predicción por lote (CSV) |
-
-### Ejemplo POST /api/predict
-```json
-{
-  "model": "logistic_regression",
-  "features": {
-    "mean_radius": 17.99,
-    "mean_texture": 10.38,
-    ...
-  }
-}
-```
-
----
-
-## 🚀 Despliegue (Render / Railway)
-
-1. Asegúrate de que `requirements.txt` esté actualizado
-2. Crea un archivo `Procfile`:
-   ```
-   web: python backend/app.py
-   ```
-3. Cambia `debug=True` a `debug=False` en `app.py`
-4. Usa `PORT = int(os.environ.get("PORT", 5000))` y `app.run(port=PORT)`
-5. Pre-entrena los modelos y sube los `.pkl` al repositorio
-
----
-
-## 📝 Notas
-- Esta herramienta es **únicamente académica**. No reemplaza diagnóstico médico.
-- Los modelos se cargan en memoria al iniciar el servidor; las predicciones son instantáneas.
