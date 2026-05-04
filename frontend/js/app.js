@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api";
+const API = "https://tu-app.onrender.com";
 
 // ── Estado global ────────────────────────────────────────────────────────────
 let featureNames    = [];
@@ -467,7 +467,7 @@ async function onPredictSingle(e) {
     renderIndividualResult(data, resultBox);
   } catch (err) {
     resultBox.className = "result-box";
-    resultBox.innerHTML = `<div class="error-msg">❌ Error: ${err.message}<br><small>Asegúrate de que el backend esté corriendo en http://localhost:5000</small></div>`;
+    resultBox.innerHTML = `<div class="error-msg">❌ Error: ${err.message}<br><small>"Error al conectar con el servidor. Intenta nuevamente."</small></div>`;
     resultBox.classList.remove("hidden");
   } finally {
     btn.disabled = false;
