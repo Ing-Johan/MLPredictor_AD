@@ -457,7 +457,7 @@ async function onPredictSingle(e) {
   btn.textContent = "Prediciendo…";
 
   try {
-    const res  = await fetch(`${API}/predict`, {
+    const res  = await fetch(`${API}/api/predict`, {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
       body:    JSON.stringify({ model: selectedModel, features }),
@@ -566,7 +566,7 @@ async function onBatchPredict() {
   formData.append("model", selectedModelBatch);
 
   try {
-    const res  = await fetch(`${API}/predict-batch`, { method: "POST", body: formData });
+    const res  = await fetch(`${API}/api/predict-batch`, { method: "POST", body: formData });
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     renderBatchResults(data);
