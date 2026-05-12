@@ -1,10 +1,10 @@
 const API = "https://mlpredictor-ad.onrender.com";
 
 // ── Estado global ────────────────────────────────────────────────────────────
-let featureNames    = [];
-let selectedModel   = "logistic_regression";
+let featureNames = [];
+let selectedModel = "logistic_regression";
 let selectedModelBatch = "logistic_regression";
-let metricsData     = {};
+let metricsData = {};
 
 // Ejemplos predefinidos: 6 benignos y 6 malignos
 const predefinedExamples = [
@@ -290,14 +290,14 @@ async function loadInfo() {
     console.warn("No se pudo conectar con el backend. Usando features de respaldo.");
     // Features de respaldo (Breast Cancer)
     featureNames = [
-      "mean_radius","mean_texture","mean_perimeter","mean_area","mean_smoothness",
-      "mean_compactness","mean_concavity","mean_concave_points","mean_symmetry",
-      "mean_fractal_dimension","radius_error","texture_error","perimeter_error",
-      "area_error","smoothness_error","compactness_error","concavity_error",
-      "concave_points_error","symmetry_error","fractal_dimension_error",
-      "worst_radius","worst_texture","worst_perimeter","worst_area",
-      "worst_smoothness","worst_compactness","worst_concavity",
-      "worst_concave_points","worst_symmetry","worst_fractal_dimension"
+      "mean_radius", "mean_texture", "mean_perimeter", "mean_area", "mean_smoothness",
+      "mean_compactness", "mean_concavity", "mean_concave_points", "mean_symmetry",
+      "mean_fractal_dimension", "radius_error", "texture_error", "perimeter_error",
+      "area_error", "smoothness_error", "compactness_error", "concavity_error",
+      "concave_points_error", "symmetry_error", "fractal_dimension_error",
+      "worst_radius", "worst_texture", "worst_perimeter", "worst_area",
+      "worst_smoothness", "worst_compactness", "worst_concavity",
+      "worst_concave_points", "worst_symmetry", "worst_fractal_dimension"
     ];
   }
 }
@@ -323,9 +323,9 @@ function renderMetricsBars(data) {
   const container = document.getElementById("metrics-bars");
   const models = [
     { key: "logistic_regression", label: "Regresión Logística", color: "" },
-    { key: "neural_network",      label: "Red Neuronal (MLP)",  color: "green" },
+    { key: "neural_network", label: "Red Neuronal (MLP)", color: "green" },
   ];
-  const metricKeys = ["accuracy","precision","recall","f1"];
+  const metricKeys = ["accuracy", "precision", "recall", "f1"];
 
   const getMetricValue = (metrics, key) => {
     if (!metrics) return 0;
@@ -362,10 +362,10 @@ function renderChips(containerId, metrics) {
   const el = document.getElementById(containerId);
   if (!el) return;
   const keys = [
-    { k:"accuracy",  label:"Accuracy"  },
-    { k:"precision", label:"Precision" },
-    { k:"recall",    label:"Recall"    },
-    { k:"f1",        label:"F1-Score"  },
+    { k: "accuracy", label: "Accuracy" },
+    { k: "precision", label: "Precision" },
+    { k: "recall", label: "Recall" },
+    { k: "f1", label: "F1-Score" },
   ];
   const getMetricValue = (metrics, key) => {
     if (!metrics) return 0;
@@ -414,17 +414,17 @@ function initForm() {
 
   // Valores ejemplo de una muestra benigna del dataset
   const exampleValues = {
-    mean_radius:13.54, mean_texture:14.36, mean_perimeter:87.46, mean_area:566.3,
-    mean_smoothness:0.09779, mean_compactness:0.08129, mean_concavity:0.06664,
-    mean_concave_points:0.04781, mean_symmetry:0.1885, mean_fractal_dimension:0.05766,
-    radius_error:0.2699, texture_error:0.7886, perimeter_error:2.058,
-    area_error:23.56, smoothness_error:0.008462, compactness_error:0.0146,
-    concavity_error:0.02387, concave_points_error:0.01315,
-    symmetry_error:0.0198, fractal_dimension_error:0.0023,
-    worst_radius:15.11, worst_texture:19.26, worst_perimeter:99.7,
-    worst_area:711.2, worst_smoothness:0.144, worst_compactness:0.1773,
-    worst_concavity:0.239, worst_concave_points:0.1288,
-    worst_symmetry:0.2977, worst_fractal_dimension:0.07259,
+    mean_radius: 13.54, mean_texture: 14.36, mean_perimeter: 87.46, mean_area: 566.3,
+    mean_smoothness: 0.09779, mean_compactness: 0.08129, mean_concavity: 0.06664,
+    mean_concave_points: 0.04781, mean_symmetry: 0.1885, mean_fractal_dimension: 0.05766,
+    radius_error: 0.2699, texture_error: 0.7886, perimeter_error: 2.058,
+    area_error: 23.56, smoothness_error: 0.008462, compactness_error: 0.0146,
+    concavity_error: 0.02387, concave_points_error: 0.01315,
+    symmetry_error: 0.0198, fractal_dimension_error: 0.0023,
+    worst_radius: 15.11, worst_texture: 19.26, worst_perimeter: 99.7,
+    worst_area: 711.2, worst_smoothness: 0.144, worst_compactness: 0.1773,
+    worst_concavity: 0.239, worst_concave_points: 0.1288,
+    worst_symmetry: 0.2977, worst_fractal_dimension: 0.07259,
   };
 
   wrapper.innerHTML = featureNames.map(f => `
@@ -457,10 +457,10 @@ async function onPredictSingle(e) {
   btn.textContent = "Prediciendo…";
 
   try {
-    const res  = await fetch(`${API}/api/predict`, {
-      method:  "POST",
+    const res = await fetch(`${API}/api/predict`, {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ model: selectedModel, features }),
+      body: JSON.stringify({ model: selectedModel, features }),
     });
     const data = await res.json();
     if (data.error) throw new Error(data.error);
@@ -477,11 +477,11 @@ async function onPredictSingle(e) {
 
 function renderIndividualResult(data, box) {
   const isBenign = data.prediction === 1;
-  const emoji    = isBenign ? "🟢" : "🔴";
-  const cls      = isBenign ? "benign" : "malign";
-  const label    = data.label;
+  const emoji = isBenign ? "🟢" : "🔴";
+  const cls = isBenign ? "benign" : "malign";
+  const label = data.label;
   const pMaligno = (data.probability_malignant * 100).toFixed(1);
-  const pBenigno = (data.probability_benign    * 100).toFixed(1);
+  const pBenigno = (data.probability_benign * 100).toFixed(1);
   const modelLabel = data.model === "neural_network" ? "Red Neuronal" : "Regresión Logística";
 
   box.className = `result-box ${cls}`;
@@ -514,14 +514,14 @@ function renderIndividualResult(data, box) {
 // PREDICCIÓN POR LOTE
 // ══════════════════════════════════════════════════════════════════════════════
 function initBatch() {
-  const zone   = document.getElementById("upload-zone");
-  const input  = document.getElementById("csv-file");
-  const btnPred= document.getElementById("btn-batch-predict");
-  const btnDL  = document.getElementById("btn-download-sample");
+  const zone = document.getElementById("upload-zone");
+  const input = document.getElementById("csv-file");
+  const btnPred = document.getElementById("btn-batch-predict");
+  const btnDL = document.getElementById("btn-download-sample");
 
   // Drag & drop
-  zone.addEventListener("dragover",  e => { e.preventDefault(); zone.classList.add("drag-over"); });
-  zone.addEventListener("dragleave", ()  => zone.classList.remove("drag-over"));
+  zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("drag-over"); });
+  zone.addEventListener("dragleave", () => zone.classList.remove("drag-over"));
   zone.addEventListener("drop", e => {
     e.preventDefault();
     zone.classList.remove("drag-over");
@@ -562,11 +562,11 @@ async function onBatchPredict() {
   btn.textContent = "Procesando…";
 
   const formData = new FormData();
-  formData.append("file",  input.files[0]);
+  formData.append("file", input.files[0]);
   formData.append("model", selectedModelBatch);
 
   try {
-    const res  = await fetch(`${API}/api/predict-batch`, { method: "POST", body: formData });
+    const res = await fetch(`${API}/api/predict-batch`, { method: "POST", body: formData });
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     renderBatchResults(data);
@@ -581,9 +581,9 @@ async function onBatchPredict() {
 }
 
 function renderBatchResults(data) {
-  const resultDiv    = document.getElementById("result-batch");
-  const metricsBox   = document.getElementById("batch-metrics-box");
-  const tableWrap    = document.getElementById("batch-table-wrap");
+  const resultDiv = document.getElementById("result-batch");
+  const metricsBox = document.getElementById("batch-metrics-box");
+  const tableWrap = document.getElementById("batch-table-wrap");
 
   resultDiv.classList.remove("hidden");
 
@@ -596,7 +596,7 @@ function renderBatchResults(data) {
       <div class="chip-row">
         <div class="chip chip-blue">
           <span class="chip-label">Accuracy</span>
-          <span>${(m.accuracy  * 100).toFixed(2)}%</span>
+          <span>${(m.accuracy * 100).toFixed(2)}%</span>
         </div>
         <div class="chip chip-green">
           <span class="chip-label">Precision</span>
@@ -604,11 +604,11 @@ function renderBatchResults(data) {
         </div>
         <div class="chip chip-purple">
           <span class="chip-label">Recall</span>
-          <span>${(m.recall    * 100).toFixed(2)}%</span>
+          <span>${(m.recall * 100).toFixed(2)}%</span>
         </div>
         <div class="chip chip-blue">
           <span class="chip-label">F1-Score</span>
-          <span>${(m.f1        * 100).toFixed(2)}%</span>
+          <span>${(m.f1 * 100).toFixed(2)}%</span>
         </div>
       </div>
       ${m.cm_image
@@ -620,11 +620,11 @@ function renderBatchResults(data) {
   }
 
   // Tabla de predicciones (máx 200 filas para performance)
-  const rows  = data.predictions.slice(0, 200);
+  const rows = data.predictions.slice(0, 200);
   const model = data.model === "neural_network" ? "Red Neuronal" : "Regresión Logística";
   const total = data.predictions.length;
-  const benignCount  = data.predictions.filter(r => r.prediction === 1).length;
-  const malignCount  = total - benignCount;
+  const benignCount = data.predictions.filter(r => r.prediction === 1).length;
+  const malignCount = total - benignCount;
 
   tableWrap.innerHTML = `
     <div style="padding:12px 16px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:13px;display:flex;gap:20px;align-items:center;">
@@ -649,7 +649,7 @@ function renderBatchResults(data) {
             <td>${r.index + 1}</td>
             <td><span class="badge ${r.prediction === 1 ? 'badge-benigno' : 'badge-maligno'}">${r.label}</span></td>
             <td>${(r.probability_malignant * 100).toFixed(1)}%</td>
-            <td>${(r.probability_benign    * 100).toFixed(1)}%</td>
+            <td>${(r.probability_benign * 100).toFixed(1)}%</td>
           </tr>
         `).join("")}
       </tbody>
@@ -657,24 +657,24 @@ function renderBatchResults(data) {
   `;
 }
 
-// ── Descargar CSV de ejemplo ──────────────────────────────────────────────────
-function downloadSampleCSV() {
-  const headers = featureNames.join(",");
-  // 5 filas de ejemplo con valores típicos del dataset
-  const rows = [
-    "17.99,10.38,122.8,1001,0.1184,0.2776,0.3001,0.1471,0.2419,0.07871,1.095,0.9053,8.589,153.4,0.006399,0.04904,0.05373,0.01587,0.03003,0.006193,25.38,17.33,184.6,2019,0.1622,0.6656,0.7119,0.2654,0.4601,0.1189",
-    "20.57,17.77,132.9,1326,0.08474,0.07864,0.0869,0.07017,0.1812,0.05667,0.5435,0.7339,3.398,74.08,0.005225,0.01308,0.0186,0.0134,0.01389,0.003532,24.99,23.41,158.8,1956,0.1238,0.1866,0.2416,0.186,0.275,0.08902",
-    "19.69,21.25,130,1203,0.1096,0.1599,0.1974,0.1279,0.2069,0.05999,0.7456,0.7869,4.585,94.03,0.00615,0.04006,0.03832,0.02058,0.0225,0.004571,23.57,25.53,152.5,1709,0.1444,0.4245,0.4504,0.243,0.3613,0.08758",
-    "11.42,20.38,77.58,386.1,0.1425,0.2839,0.2414,0.1052,0.2597,0.09744,0.4956,1.156,3.445,27.23,0.00911,0.07458,0.05661,0.01867,0.05963,0.009208,14.91,26.5,98.87,567.7,0.2098,0.8663,0.6869,0.2575,0.6638,0.173",
-    "12.45,15.7,82.57,477.1,0.1278,0.17,0.1578,0.08089,0.2087,0.07613,0.3345,0.8902,2.217,27.19,0.00751,0.03345,0.03672,0.01137,0.02165,0.005082,15.47,23.75,103.4,741.6,0.1791,0.5249,0.5355,0.1741,0.3985,0.1244",
-  ];
-  // Añadir columna target (para que se calculen métricas)
-  const csvContent = "target," + headers + "\n" +
-    rows.map((r, i) => `${i % 2},${r}`).join("\n");
+// ── Descargar CSV ────────────────────────────────────────────────────────
+async function downloadSampleCSV() {
 
-  const blob = new Blob([csvContent], { type: "text/csv" });
-  const a    = document.createElement("a");
-  a.href     = URL.createObjectURL(blob);
-  a.download = "muestra_breast_cancer.csv";
+  const response = await fetch("static/data/breast_cancer.csv");
+
+  if (!response.ok) {
+    alert("No se pudo descargar el dataset");
+    return;
+  }
+
+  const blob = await response.blob();
+
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+
+  a.download = "dataset_ejemplo.csv";
+
+  document.body.appendChild(a);
   a.click();
+  document.body.removeChild(a);
 }
